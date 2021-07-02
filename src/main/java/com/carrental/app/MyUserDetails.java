@@ -10,28 +10,34 @@ import java.util.Collections;
 
 public class MyUserDetails implements UserDetails {
 
-    private String userName;
+    private String username;
+    private String password;
+    private String userrole;
 
-    public MyUserDetails(String userName){
-        this.userName = userName;
-    }
+    public MyUserDetails(String username, String password, Integer userrole) {
+        this.username = username;
+        this.password = password;
+        if(userrole == 1){
+            this.userrole = "ROLE_ADMIN";
+        }else{
+            this.userrole = "ROLE_USER";
+        }
 
-    public MyUserDetails(){
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        return Collections.singletonList(new SimpleGrantedAuthority(this.userrole));
     }
 
     @Override
     public String getPassword(){
-        return "pass";
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return userName;
+        return this.username;
     }
 
     @Override
